@@ -37,7 +37,7 @@ node {
                 stage('Deploy') {
                     withCredentials([string(credentialsId: 'aws-account-id', variable: 'awsAccountId'), string(credentialsId: 'aws-repo', variable: 'awsRepo')]) {
                         echo 'Deploying cloudformation..'
-                        sh "aws cloudformation deploy --stack-name $serviceName-stack --template-file ./ecs.yaml --parameter-overrides ApplicationName=$serviceName ApplicationEnvironment=dev ECRRepositoryUri=$awsRepo/$serviceName:$commitHash ExecutionRoleArn=arn:aws:iam::$awsAccountId:role/ecsTaskExecutionRole TargetGroupArn=arn:aws:elasticloadbalancing:us-east-2:$awsAccountId:targetgroup/default/a1d737973d78e824 --role-arn arn:aws:iam::$awsAccountId:role/awsCloudFormationRole --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM --region us-east-2"
+                        sh "aws cloudformation deploy --stack-name boss-stack --template-file ./ecs.yaml --parameter-overrides ApplicationName=$serviceName ApplicationEnvironment=dev ECRRepositoryUri=$awsRepo/$serviceName:$commitHash ExecutionRoleArn=arn:aws:iam::$awsAccountId:role/ecsTaskExecutionRole TargetGroupArn=arn:aws:elasticloadbalancing:us-east-2:$awsAccountId:targetgroup/default/a1d737973d78e824 --role-arn arn:aws:iam::$awsAccountId:role/awsCloudFormationRole --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM --region us-east-2"
                     }
                 }
             }
