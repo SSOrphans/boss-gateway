@@ -44,7 +44,8 @@ node {
         }
     }
     catch (exc) {
-        echo "$exc"
+        echo "Caught: ${err}"
+        currentBuild.result = 'FAILURE'
     } finally {
         stage('Cleanup') {
             sh 'mvn clean'
