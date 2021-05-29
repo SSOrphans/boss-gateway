@@ -1,0 +1,3 @@
+[submodule "boss-core"]
+	path = boss-core
+	url = https://github.com/SSOrphans/boss-core.git
