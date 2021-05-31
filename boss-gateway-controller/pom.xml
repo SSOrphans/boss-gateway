@@ -19,9 +19,14 @@
   </properties>
   <dependencies>
     <dependency>
+      <groupId>com.auth0</groupId>
+      <artifactId>java-jwt</artifactId>
+      <version>3.11.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.ssor</groupId>
-      <artifactId>boss-services</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <artifactId>boss-core</artifactId>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
