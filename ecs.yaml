@@ -115,8 +115,7 @@ Resources:
       UnhealthyThresholdCount: 2
       HealthyThresholdCount: 2
       Matcher:
-        - GrpcCode : '12'
-          HttpCode: '200-499'
+        - HttpCode: '200-499'
       Name: !Sub '${ApplicationName}-${ApplicationEnvironment}-tg'
       Port: 8080
       Protocol: HTTP
