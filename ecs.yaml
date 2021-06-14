@@ -48,10 +48,10 @@ Resources:
       LaunchType: FARGATE
       NetworkConfiguration:
         AwsvpcConfiguration:
-          AssignPublicIp: ENABLED
+          AssignPublicIp: DISABLED
           Subnets:
             - !Sub '{{resolve:secretsmanager:SOrphans/${ApplicationEnvironment}:SecretString:Private-Subnet-A}}'
-            - !Sub '{{resolve:secretsmanager:SOrphans/${ApplicationEnvironment}:SecretString:Private-Subnet-B}}'
+            # - !Sub '{{resolve:secretsmanager:SOrphans/${ApplicationEnvironment}:SecretString:Private-Subnet-B}}'
           SecurityGroups:
             - !Sub '{{resolve:secretsmanager:SOrphans/${ApplicationEnvironment}:SecretString:Base-SecGroup}}'
       LoadBalancers:
@@ -88,12 +88,12 @@ Resources:
               Value: !Ref ApplicationEnvironment
             - Name: PORT
               Value: '8080'
-            - Name: DB_HOST_URL
-              Value: !Join
-                - ''
-                - - !Sub 'jdbc:mysql://{{resolve:secretsmanager:SOrphans/${ApplicationEnvironment}:SecretString:host}}'
-                  - !Sub ':{{resolve:secretsmanager:SOrphans/${ApplicationEnvironment}:SecretString:port}}'
-                  - !Sub '/{{resolve:secretsmanager:SOrphans/${ApplicationEnvironment}:SecretString:dbname}}'
+            # - Name: DB_HOST_URL
+            #   Value: !Join
+            #     - ''
+            #     - - !Sub 'jdbc:mysql://{{resolve:secretsmanager:SOrphans/${ApplicationEnvironment}:SecretString:host}}'
+            #       - !Sub ':{{resolve:secretsmanager:SOrphans/${ApplicationEnvironment}:SecretString:port}}'
+            #       - !Sub '/{{resolve:secretsmanager:SOrphans/${ApplicationEnvironment}:SecretString:dbname}}'
           Essential: true
           Memory: 2048
           LogConfiguration:
@@ -109,7 +109,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckIntervalSeconds: 60
-      HealthCheckPath: '/'
+      HealthCheckPath: '/api/v1/users'
       HealthCheckTimeoutSeconds: 5
       HealthCheckPort: '8080'
       UnhealthyThresholdCount: 2
@@ -129,8 +129,8 @@ Resources:
       Conditions:
         - Field: path-pattern
           Values:
-            - /api/*
-            - /api*
+            - /api/v1/users/*
+            - /api/v1/users*
       Actions:
         - Type: forward
           TargetGroupArn: !Ref TargetGroup
