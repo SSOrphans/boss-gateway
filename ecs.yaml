@@ -109,11 +109,12 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckIntervalSeconds: 60
-      HealthCheckPath: '/api/v1/users'
+      HealthCheckPath: '/login'
       HealthCheckTimeoutSeconds: 5
       HealthCheckPort: '8080'
       UnhealthyThresholdCount: 2
       HealthyThresholdCount: 2
+      Matcher: "200-499"
       Name: !Sub '${ApplicationName}-${ApplicationEnvironment}-tg'
       Port: 8080
       Protocol: HTTP
@@ -129,8 +130,8 @@ Resources:
       Conditions:
         - Field: path-pattern
           Values:
-            - /api/v1/users/*
-            - /api/v1/users*
+            - /login
+            - /login
       Actions:
         - Type: forward
           TargetGroupArn: !Ref TargetGroup
