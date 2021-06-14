@@ -131,7 +131,7 @@ Resources:
       Conditions:
         - Field: path-pattern
           Values:
-            - /login
+            - /login*
       Actions:
         - Type: forward
           TargetGroupArn: !Ref TargetGroup
